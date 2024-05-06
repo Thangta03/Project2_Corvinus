@@ -42,11 +42,9 @@ summary(data)
     upper_bound <- Q3 + 1.5 * IQR 
     # Identify outliers
     outliers <- data$Tech_Exports < lower_bound | data$Tech_Exports > upper_bound 
-    # See outlier values
-    print(data$Tech_Exports[outliers]) 
-# Remove outliers
-clean_data <- data[!outliers, ]
-print (clean_data)
+    # Remove outliers
+    clean_data <- data[!outliers, ]
+    print (clean_data)
 
 ############################################################################################################
 # interpret data for single year
