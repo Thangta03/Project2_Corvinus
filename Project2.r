@@ -23,7 +23,7 @@ data <- na.omit(data)
 variables <- names(data)
 print(variables)
 # Rename the columns for easier interpretation
-data <- rename(data, Country=`Country Name`, Tech_Exports = `High-Tech_Exports`, `R&D` = `R&D_Expenditure`, Education = `Percent_of_Tertiary_Education`, Patent_applies = `Patent applications per million people`, GDP =`GDP(Current_US$)`)
+data <- rename(data, Country=`Country Name`, Tech_Exports = `High-Tech_Exports`, `R&D` = `R&D_Expenditure`, Education = `Percent_of_Tertiary_Education`, GDP =`GDP(Current_US$)`)
 # Print the data
 print(data)
 
