@@ -1,2 +1,29 @@
 # Project2_Corvinus
-R language to interpret Tech-export with other variables using time series
+
+## Overview
+This project utilizes R language to interpret the relationship between tech exports and other significant variables such as education, R&D expenditure, patent applications, and GDP using time series analysis. The primary goal is to understand how these variables interact and influence tech exports over time.
+
+## Descriptive Statistics
+The analysis begins with generating descriptive statistics to summarize the data. Key insights include the distribution of tech exports proportion, R&D expenditure, education levels, patent applications, and GDP across different countries and years. These statistics provide a foundational understanding of the data's central tendencies, dispersion, and overall distribution.
+
+## Graphical Analysis
+Several scatter plots and correlation matrices were generated to visually explore the relationships between variables. For instance:
+- Scatter plots of tech export proportion vs. R&D expenditure, education, patent applications, and GDP highlight the varying degrees of correlation between these variables.
+- Correlation matrices further quantify these relationships, providing a clear overview of how each variable is associated with tech exports.
+
+## Analysis Process
+The analysis process involved several key steps:
+1. **Data Cleaning:** Initial steps included removing rows with missing values and outliers that could skew the results.
+2. **Data Transformation:** Variables were transformed for better interpretation, such as calculating the tech export proportion.
+3. **Descriptive Statistics:** Summary statistics were generated to understand the data's distribution.
+4. **Graphical Analysis:** Scatter plots and correlation matrices were used to visualize relationships between variables.
+5. **Time Series Analysis:** The data was analyzed over time to identify trends and patterns in tech exports and their relationship with other variables.
+
+## Significance of Findings
+The findings from this project shed light on the complex interplay between tech exports and factors like R&D expenditure, education, patent applications, and GDP. Notably, the analysis reveals:
+- A positive correlation between tech exports and R&D expenditure, suggesting that higher investment in research and development is associated with increased tech exports.
+- The influence of education and patent applications on tech exports, indicating that human capital and innovation play crucial roles in a country's tech export capabilities.
+- The varying impact of GDP on tech exports, highlighting the importance of economic context in understanding tech export performance.
+
+These insights contribute to a deeper understanding of the factors driving tech exports and can inform policy decisions aimed at enhancing a country's technological competitiveness.
+
