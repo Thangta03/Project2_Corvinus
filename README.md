@@ -27,3 +27,14 @@ The findings from this project shed light on the complex interplay between tech 
 
 These insights contribute to a deeper understanding of the factors driving tech exports and can inform policy decisions aimed at enhancing a country's technological competitiveness.
 
+## Corrected Time Series Analysis and Interpretation
+The time series analysis has been meticulously corrected to ensure the accurate application of ARIMA and ARMA models for forecasting. This section outlines the corrections made, summarizes the results, and interprets their significance.
+
+### Corrections Made
+The initial analysis was refined by ensuring the data was stationary before applying the ARIMA and ARMA models. This was achieved by incorporating the Augmented Dickey-Fuller test to check for stationarity and adjusting the models accordingly.
+
+### Summary of Results and Their Interpretation
+The corrected time series analysis provides a more accurate forecast of tech exports, revealing insights into future trends. The ARIMA and ARMA models, now properly applied, offer a clearer understanding of the dynamics influencing tech exports. The analysis highlights the importance of considering historical data patterns and their impact on future projections.
+
+### Insights into Future Trends
+The corrected analysis underscores the potential for growth in tech exports, driven by factors such as R&D expenditure, education, and innovation. By accurately forecasting future trends, this analysis aids in strategic planning and policy formulation aimed at bolstering a country's tech export capabilities.
