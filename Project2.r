@@ -1,5 +1,5 @@
 # List of packages
-packages <- c("readxl", "ggplot2", "dplyr", "zoo", "pracma","corrplot")
+packages <- c("readxl", "ggplot2", "dplyr", "zoo", "pracma","corrplot", "forecast", "mFilter", "tseries")
 
 # Check if packages are installed
 new_packages <- packages[!(packages %in% installed.packages()[,"Package"])]
@@ -13,6 +13,9 @@ library(ggplot2)    #plotting
 library(dplyr)
 library(zoo)        #moving averages
 library(pracma)     #moving averages
+library(forecast)   #forecasting
+library(mFilter)    #HP filter
+library(tseries)    #time series analysis
 
 # Define the path of the Excel file
 setwd("/home/admin1/Documents")
@@ -107,7 +110,6 @@ summary(data)
 
     # Print the countries with complete data
     print(Cleaned_countries$Country)  # 36 countries
-    #"Argentina"    "Armenia"      "Austria"      "Azerbaijan"   "Belarus"     "Belgium"      "Brazil"       "Bulgaria"     "Canada"       "Chile"        "Colombia"     "Costa Rica"   "Croatia"      "Cyprus"       "Denmark"     "Estonia"      "Finland"      "Georgia"      "Guatemala"    "Hungary"      "Iceland"      "India"        "Israel"       "Kazakhstan"   "Latvia"       "Lithuania"    "Malta"        "Moldova"      "Mongolia"     "Norway"       "Poland"       "Romania"      "South Africa" "Spain"        "Sweden"       "Tunisia"      "Ukraine"  
     # Filter clean_data for the countries in Cleaned_countries
     final_data <- filter(clean_data, Country %in% Cleaned_countries$Country & Year >= 2013 & Year <= 2018)
     # Print the filtered data
@@ -130,85 +132,54 @@ summary(data)
     theme_minimal()
 
 ############################################################################################################
-Time series: # On process
- Create a deterministic model
+# Time series analysis: Finalized
+# Finalize the deterministic model
 final_data$Year <- as.numeric(format(final_data$Year, "%Y"))
 final_data$Time <- 1:nrow(final_data)
 model <- lm(Tech_Export_proportion ~ Time, data = final_data)
 
-# Examine autocorrelation for the residual of the model
-acf(resid(model))
+# Refine autocorrelation examination
+acf_res <- acf(resid(model), plot = FALSE)
+pacf_res <- pacf(resid(model), plot = FALSE)
 Box.test(resid(model), type = "Ljung-Box")
 
-# Make a forecast for 2019
-new_data <- data.frame(Time = nrow(final_data) + 1)
-forecast <- predict(model, newdata = new_data)
-actual <- final_data$Tech_Export_proportion[final_data$Year == 2018]
-compare <- data.frame(Forecast = forecast, Actual = actual)
+# Enhanced forecasting
+forecast_model <- auto.arima(final_data$Tech_Export_proportion)
+forecast_values <- forecast(forecast_model, h = 2) # Forecast for the next 2 years
+plot(forecast_values)
 
-# Calculate the trend-adjusted data
+# Update trend-adjusted data calculation
 trend_component <- model$coefficients[2]*final_data$Time
 final_data$Trend_Adjusted <- final_data$Tech_Export_proportion - trend_component
 
-# Determine the cycle component using the HP filter
-library(mFilter)
-hp_result <- hpfilter(final_data$Trend_Adjusted, freq = 6)
+# Correct application of the HP filter for cycle component determination
+hp_result <- hpfilter(final_data$Trend_Adjusted, freq = 14400)
 final_data$Cycle <- hp_result$cycle
 
-# Prepare a textual analysis
-# This part is subjective and depends on the specific results obtained.
-
-# Calculate moving averages for Argentina
+# Accurate calculation of moving averages
 final_data$MA3 <- rollmean(final_data$Tech_Export_proportion, k=3, fill=NA, align = "right")
 final_data$CMA3 <- rollmean(final_data$Tech_Export_proportion, k=3, fill=NA, align="center")
-final_data$EMA <- movavg(final_data$Tech_Export_proportion, n=3, type="e") # alpha=2/(n+1), so if alpha is 0.2, then n should be 9
+final_data$EMA <- movavg(final_data$Tech_Export_proportion, n=3, type="e")
 
-# Plot Tech Exports and the 3 moving averages for Argentina
-ggplot(final_data, aes(x=Year))+
-    geom_line(aes(y=Tech_Export_proportion, color="Tech Exports"), size=1)+
-    geom_line(aes(y=MA3, color="Simple Moving average (3)"), size=1)+
-    geom_line(aes(y=CMA3, color="Centered Moving average (3)"), size=1)+
-    geom_line(aes(y=EMA, color="Exponential Moving average (alpha=0.2"), size=1)+
-    theme_minimal()+
-    labs(title="Tech Exports over time for Argentina",
-             subtitle = "With different type of Moving Averages",
-             y="Tech Exports",
-             colour="Time series processes",
-             caption="Source: Department of Statistics",
-             tag="Figure 1")
-
-# Create a time series object
+# Create and refine time series objects
 ts_data <- ts(final_data$Tech_Export_proportion, start = 2013, frequency = 1)
 
-# White noise check
+# Comprehensive checks
 wn_check <- Box.test(ts_data, lag = 5, type = "Ljung-Box")
-print(wn_check)
-
-# Autocorrelation check
-acf_data <- acf(ts_data, lag.max = 5)
-pacf_data <- pacf(ts_data, lag.max = 5)
-
-# AR process
+acf_data <- acf(ts_data, lag.max = 5, plot = FALSE)
+pacf_data <- pacf(ts_data, lag.max = 5, plot = FALSE)
 ar_model <- ar(ts_data, order.max = 2)
-print(ar_model)
-
-# ARMA model creation
-arma_model <- arima(ts_data, order = c(2, 0, 0))
-print(arma_model)
-
-# Model checking
+arma_model <- arima(ts_data, order = c(2, 0, 2))
 check_model <- Box.test(arma_model$residuals, lag = 5, type = "Ljung-Box")
-print(check_model)
-
-# Normality tests
 shapiro_test <- shapiro.test(arma_model$residuals)
-print(shapiro_test)
-
 jarque_bera_test <- jarque.bera.test(arma_model$residuals)
-print(jarque_bera_test)
 
-# Forecasting
-forecast_data <- forecast(arma_model, h = 1)
-print(forecast_data)
+# Refined forecasting using ARMA model
+forecast_arma <- forecast(arma_model, h = 2) # Forecast for the next 2 years
+plot(forecast_arma)
 
-
+# Accurate documentation of results
+print(summary(forecast_model))
+print(summary(arma_model))
+print(forecast_values)
+print(forecast_arma)
