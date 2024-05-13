@@ -3,6 +3,14 @@
 ## Overview
 This project utilizes R language to interpret the relationship between tech exports and other significant variables such as education, R&D expenditure, patent applications, and GDP using time series analysis. The primary goal is to understand how these variables interact and influence tech exports over time.
 
+## Methodology
+The methodology in `Project2(2).r` involves comprehensive data analysis and visualization steps, including:
+- **Data Preparation:** The process starts with installing and loading necessary R packages for data manipulation and visualization. Data is then loaded, cleaned (removing NA values), and variables are renamed for clarity.
+- **Descriptive Statistics and Outlier Detection:** Descriptive statistics are generated to summarize the data, followed by outlier detection and filtering for specific criteria.
+- **Visualization:** Visualization is achieved through scatter plots and line plots to explore relationships and trends over time.
+- **Time Series Analysis:** This includes model creation, autocorrelation checking, forecasting, and checking for multicollinearity.
+- **Enhancements:** The methodology is enhanced by automated testing for data integrity and model accuracy, and addressing multicollinearity in regression models.
+
 ## Descriptive Statistics
 The analysis begins with generating descriptive statistics to summarize the data. Key insights include the distribution of tech exports proportion, R&D expenditure, education levels, patent applications, and GDP across different countries and years. These statistics provide a foundational understanding of the data's central tendencies, dispersion, and overall distribution.
 

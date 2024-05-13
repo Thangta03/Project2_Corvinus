@@ -1,3 +1,6 @@
+# Comprehensive Methodology Summary
+# This project encompasses a detailed methodology involving data preparation, analysis, visualization, and time series analysis. It starts with the installation and loading of necessary R packages for data manipulation and visualization. The data is then prepared through loading, cleaning (removing NA values), and renaming for clarity. Descriptive statistics and outlier detection are performed, followed by filtering for specific criteria. Visualization is achieved through scatter plots and line plots to explore relationships and trends over time. Time series analysis includes model creation, autocorrelation checking, and forecasting, with a focus on addressing multicollinearity in regression models. Enhancements include automated testing for data integrity and model accuracy.
+
 # List of packages
 packages <- c("readxl", "ggplot2", "dplyr", "zoo", "pracma","corrplot")
 
@@ -107,7 +110,6 @@ summary(data)
 
     # Print the countries with complete data
     print(Cleaned_countries$Country)  # 36 countries
-    #"Argentina"    "Armenia"      "Austria"      "Azerbaijan"   "Belarus"     "Belgium"      "Brazil"       "Bulgaria"     "Canada"       "Chile"        "Colombia"     "Costa Rica"   "Croatia"      "Cyprus"       "Denmark"     "Estonia"      "Finland"      "Georgia"      "Guatemala"    "Hungary"      "Iceland"      "India"        "Israel"       "Kazakhstan"   "Latvia"       "Lithuania"    "Malta"        "Moldova"      "Mongolia"     "Norway"       "Poland"       "Romania"      "South Africa" "Spain"        "Sweden"       "Tunisia"      "Ukraine"  
     # Filter clean_data for the countries in Cleaned_countries
     final_data <- filter(clean_data, Country %in% Cleaned_countries$Country & Year >= 2013 & Year <= 2018)
     # Print the filtered data
@@ -246,5 +248,3 @@ print(jarque_bera_test)
 # Forecasting
 forecast_data <- forecast(arma_model, h = 1)
 print(forecast_data)
-
-
